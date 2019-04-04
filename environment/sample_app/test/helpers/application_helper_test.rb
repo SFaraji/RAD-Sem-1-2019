@@ -1,4 +1,4 @@
-test/helpers/application_helper_test.rb
+# test/helpers/application_helper_test.rb
  require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
