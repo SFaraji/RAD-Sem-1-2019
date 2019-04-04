@@ -4,3 +4,10 @@
     <%= text_field_tag'visitor_name', @name %> </p> 
     <%= submit_tag'Sign in' %> 
 <% end %>
+
+<p> There are <%= @entries.size %> previous visitors </p>
+<ul>
+<% @entries.each do |entry| %>
+    <li> <%= entry.name%> </li> 
+<% end %>
+</ul>
