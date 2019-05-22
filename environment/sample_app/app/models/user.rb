@@ -19,11 +19,6 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
     end
 
-    # Converts email to all lower-case.
-    def downcase_email
-      self.email = email.downcase
-    end
-
     # Returns a random token.
     def User.new_token 
         SecureRandom.urlsafe_base64
@@ -47,12 +42,6 @@ class User < ApplicationRecord
         update_attribute(:remember_digest, nil)
     end
 
-    # Creates and assigns the activation token and digest.
-    def create_activation_digest
-      self.activation_token  = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
-
     # Activates an account.
     def activate
         update_columns(activated: true, activated_at: Time.zone.now)
@@ -61,6 +50,19 @@ class User < ApplicationRecord
     # Sends activation email.
     def send_activation_email
        UserMailer.account_activation(self).deliver_now
+    end
+
+private
+
+    # Converts email to all lower-case.
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    # Creates and assigns the activation token and digest.
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
     end
 
 end
